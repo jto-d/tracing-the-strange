@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Story {
+  id           Int           @id @default(autoincrement()) @map("story_id")
+  title        String
+  chineseTitle String?       @map("chinese_title")
+  synopsis     String?
+  originalText String?       @map("original_text")
+  storyMotifs  StoryMotif[]
+
+  @@map("stories")
+}
+
+model Motif {
+  id               Int               @id @default(autoincrement()) @map("motif_id")
+  motifName        String            @map("motif_name")
+  description      String?
+  storyMotifs      StoryMotif[]
+  modernCharacters ModernCharacter[]
+
+  @@map("motifs")
+}
+
+model StoryMotif {
+  id      Int     @id @default(autoincrement())
+  storyId Int     @map("story_id")
+  motifId Int     @map("motif_id")
+  notes   String?
+  story   Story   @relation(fields: [storyId], references: [id])
+  motif   Motif   @relation(fields: [motifId], references: [id])
+
+  @@map("story_motifs")
+}
+
+model ModernCharacter {
+  id          Int     @id @default(autoincrement()) @map("character_id")
+  name        String
+  media       String
+  description String?
+  motifId     Int     @map("motif_id")
+  motif       Motif   @relation(fields: [motifId], references: [id])
+
+  @@map("modern_characters")
+}
+
