@@ -12,6 +12,8 @@ model Motif {
   motifName   String      @map("motif_name")
   description String?
   imagePath   String      @map("image_path")
+  backgroundImagePath String @map("background_image_path")
+  color String?
   characters  Character[]
 
   @@map("motifs")

@@ -1,6 +1,16 @@
 import { Box, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 
+interface Character {
+  id: number;
+  name: string;
+  media: string;
+  franchise: string;
+  description: string | null;
+  imagePath: string;
+  motifId: number;
+}
+
 function TypePill({ text }: { text: string }) {
   return (
     <Box 
@@ -21,16 +31,16 @@ function TypePill({ text }: { text: string }) {
   );
 }
 
-export default function DashboardCard({ name, media, mediaType }: { name: string, media: string, mediaType: string }) {
+export default function DashboardCard({ character }: { character: Character }) {
   return (
     <Stack direction="column" spacing={1.5}>
       <Box sx={{ position: 'relative', width: '100%', aspectRatio: '1/1' }}>
-        <Image src="/images/characters/ahri.jpg" alt="Dashboard Card" fill style={{ objectFit: 'cover' }} />
+        <Image src={character.imagePath} alt="Dashboard Card" fill style={{ objectFit: 'cover' }} />
         <TypePill text="Fox-spirit" />
       </Box>
       <Stack direction="column" spacing={1}>
-        <Typography variant="h3">{name}</Typography>
-        <Typography variant="body1">{media} • {mediaType}</Typography>
+        <Typography variant="h3">{character.name}</Typography>
+        <Typography variant="body1">{character.franchise} • {character.media}</Typography>
       </Stack>
     </Stack>
 

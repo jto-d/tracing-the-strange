@@ -1,24 +1,22 @@
 'use client';
 
-import { Box, Typography, Stack } from '@mui/material';
+import { useState } from 'react';
+import { Box, Typography, Stack, Slide } from '@mui/material';
 import SelectorCard from './SelectorCard';
+import MotifDetail from './MotifDetail';
 
-const motifCategories = [
-  'Beasts',
-  'Demons',
-  'Dragons',
-  'Fairies',
-  'Fox Spirits',
-  'Ghosts',
-  'Giants',
-  'Gods',
-  'Insect Spirit',
-  'Living Corpses',
-  'Plant-Spirits',
-  'Skin-Changers',
-  'Snakes',
-  'Trolls',
-];
+interface Motif {
+  id: number;
+  motifName: string;
+  description: string | null;
+  imagePath: string;
+  backgroundImagePath: string;
+  color: string | null;
+}
+
+interface SelectorProps {
+  motifs: Motif[];
+}
 
 function SelectorHeader() {
   return (
@@ -38,28 +36,71 @@ function SelectorHeader() {
   );
 }
 
-function SelectorContent() {
+function SelectorContent({ motifs, onMotifClick }: { motifs: Motif[]; onMotifClick: (motif: Motif) => void }) {
   return (
     <Stack
       direction="column"
       spacing={3}
       p="40px"
     >
-      {motifCategories.map((category) => (
+      {motifs.map((motif) => (
         <SelectorCard 
-          key={category}
-          image={`/images/motifs/categories/${category}.png`} 
+          key={motif.id}
+          image={motif.imagePath}
+          onClick={() => onMotifClick(motif)}
         />
       ))}
     </Stack>
   )
 }
 
-export default function Selector() {
+export default function Selector({ motifs }: SelectorProps) {
+  const [selectedMotif, setSelectedMotif] = useState<Motif | null>(null);
+
+  const handleMotifClick = (motif: Motif) => {
+    setSelectedMotif(motif);
+  };
+
+  const handleBack = () => {
+    setSelectedMotif(null);
+  };
+
   return (
-    <Stack direction="column">
-      <SelectorHeader />
-      <SelectorContent />
-    </Stack>
+    <Box sx={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
+      <Slide direction="right" in={!selectedMotif} mountOnEnter unmountOnExit>
+        <Box sx={{ 
+          position: 'absolute', 
+          width: '100%', 
+          height: '100%', 
+          overflow: 'auto',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}>
+          <Stack direction="column">
+            <SelectorHeader />
+            <SelectorContent motifs={motifs} onMotifClick={handleMotifClick} />
+          </Stack>
+        </Box>
+      </Slide>
+
+      <Slide direction="left" in={!!selectedMotif} mountOnEnter unmountOnExit>
+        <Box sx={{ 
+          position: 'absolute', 
+          width: '100%', 
+          height: '100%', 
+          overflow: 'auto',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}>
+          {selectedMotif && <MotifDetail motif={selectedMotif} onBack={handleBack} />}
+        </Box>
+      </Slide>
+    </Box>
   );
 }
