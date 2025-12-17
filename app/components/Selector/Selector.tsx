@@ -1,6 +1,24 @@
 'use client';
 
 import { Box, Typography, Stack } from '@mui/material';
+import SelectorCard from './SelectorCard';
+
+const motifCategories = [
+  'Beasts',
+  'Demons',
+  'Dragons',
+  'Fairies',
+  'Fox Spirits',
+  'Ghosts',
+  'Giants',
+  'Gods',
+  'Insect Spirit',
+  'Living Corpses',
+  'Plant-Spirits',
+  'Skin-Changers',
+  'Snakes',
+  'Trolls',
+];
 
 function SelectorHeader() {
   return (
@@ -24,14 +42,15 @@ function SelectorContent() {
   return (
     <Stack
       direction="column"
-      spacing={2}
-      px="40px"
-      pt="40px"
+      spacing={3}
+      p="40px"
     >
-      <Typography variant="h3">Ghost</Typography>
-      <Typography variant="h3">Ghost</Typography>
-      <Typography variant="h3">Ghost</Typography>
-      <Typography variant="h3">Ghost</Typography>
+      {motifCategories.map((category) => (
+        <SelectorCard 
+          key={category}
+          image={`/images/motifs/categories/${category}.png`} 
+        />
+      ))}
     </Stack>
   )
 }

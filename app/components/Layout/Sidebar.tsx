@@ -15,6 +15,12 @@ export default function Sidebar({ children }: SidebarProps) {
         backgroundColor: 'background.paper',
         borderRight: '1px solid',
         borderColor: 'divider',
+        overflow: 'auto',
+        '&::-webkit-scrollbar': {
+          display: 'none',
+        },
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none',
       }}
     >
       {children}

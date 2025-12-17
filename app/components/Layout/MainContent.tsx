@@ -13,6 +13,11 @@ export default function MainContent({ children }: MainContentProps) {
         flex: 1,
         height: '100vh',
         overflow: 'auto',
+        '&::-webkit-scrollbar': {
+          display: 'none',
+        },
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none',
       }}
     >
       {children}
