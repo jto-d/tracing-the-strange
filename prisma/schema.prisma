@@ -7,43 +7,26 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-model Story {
-  id           Int           @id @default(autoincrement()) @map("story_id")
-  title        String
-  storyMotifs  StoryMotif[]
-
-  @@map("stories")
-}
-
 model Motif {
-  id               Int               @id @default(autoincrement()) @map("motif_id")
-  motifName        String            @map("motif_name")
-  description      String?
-  storyMotifs      StoryMotif[]
-  modernCharacters ModernCharacter[]
+  id          Int         @id @default(autoincrement()) @map("motif_id")
+  motifName   String      @map("motif_name")
+  description String?
+  imagePath   String      @map("image_path")
+  characters  Character[]
 
   @@map("motifs")
 }
 
-model StoryMotif {
-  id      Int     @id @default(autoincrement())
-  storyId Int     @map("story_id")
-  motifId Int     @map("motif_id")
-  notes   String?
-  story   Story   @relation(fields: [storyId], references: [id])
-  motif   Motif   @relation(fields: [motifId], references: [id])
-
-  @@map("story_motifs")
-}
-
-model ModernCharacter {
+model Character {
   id          Int     @id @default(autoincrement()) @map("character_id")
   name        String
   media       String
+  franchise   String
   description String?
+  imagePath   String  @map("image_path")
   motifId     Int     @map("motif_id")
   motif       Motif   @relation(fields: [motifId], references: [id])
 
-  @@map("modern_characters")
+  @@map("characters")
 }
 
