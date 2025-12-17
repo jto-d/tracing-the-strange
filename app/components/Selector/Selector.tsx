@@ -11,7 +11,7 @@ interface Motif {
   description: string | null;
   imagePath: string;
   backgroundImagePath: string;
-  color: string | null;
+  color: string;
 }
 
 interface SelectorProps {

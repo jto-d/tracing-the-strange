@@ -10,6 +10,7 @@ export default function MainContent({ children }: MainContentProps) {
   return (
     <Box
       sx={{
+        position: 'relative',
         flex: 1,
         height: '100vh',
         overflow: 'auto',
