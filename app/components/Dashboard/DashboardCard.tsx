@@ -23,7 +23,7 @@ export default function DashboardCard({ character, onClick }: { character: Chara
       onClick={onClick}
     >
       <Box sx={{ position: 'relative', width: '100%', aspectRatio: '1/1' }}>
-        <Image src={character.imagePath} alt="Dashboard Card" fill style={{ objectFit: 'cover' }} />
+        <Image src={"/images/characters/" + character.imagePath} alt="Dashboard Card" fill style={{ objectFit: 'cover' }} />
         <TypePill 
           text={character.motif.motifName || ''}
           color={character.motif.color} 

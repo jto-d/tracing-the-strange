@@ -128,7 +128,7 @@ export default function CharacterDetail({ character, open, onClose, onNext, onPr
           <Stack direction="column" sx={{ maxHeight: '90vh', overflow: 'auto' }}>
             <Box sx={{ position: 'relative', width: '100%', aspectRatio: '5/3' }}>
               <Image 
-                src={character.imagePath} 
+                src={"/images/characters/" + character.imagePath} 
                 alt={character.name} 
                 fill
                 style={{ 
