@@ -8,6 +8,26 @@ const inter = Inter({ subsets: ['latin'] });
 const theme = createTheme({
   typography: {
     fontFamily: inter.style.fontFamily,
+    h1: {
+      fontSize: '2rem',
+      fontWeight: 600,
+    },
+    h2: {
+      fontSize: '1.5rem',
+      fontWeight: 600,
+    },
+    h3: {
+      fontSize: '1.25rem',
+      fontWeight: 600,
+    },
+    body1: {
+      fontSize: '0.875rem',
+      fontWeight: 400,
+    },
+    body2: {
+      fontSize: '0.75rem',
+      fontWeight: 400,
+    }
   },
   palette: {
     mode: 'dark',

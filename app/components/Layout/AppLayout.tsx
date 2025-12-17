@@ -11,7 +11,7 @@ interface AppLayoutProps {
 
 export default function AppLayout({ sidebar, children }: AppLayoutProps) {
   return (
-    <Stack direction="row">
+    <Stack direction="row" spacing={4}>
       <Sidebar>{sidebar}</Sidebar>
       <MainContent>{children}</MainContent>
     </Stack>
