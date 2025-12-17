@@ -8,6 +8,9 @@ import { getData } from '@/lib/api-client';
 
 export default function Home() {
   const [data, setData] = useState<any>(null);
+  const [selectedMotifId, setSelectedMotifId] = useState<number | null>(null);
+  const [selectedFranchises, setSelectedFranchises] = useState<string[]>([]);
+  const [motifToOpen, setMotifToOpen] = useState<number | null>(null);
 
   useEffect(() => {
     getData()
@@ -20,9 +23,44 @@ export default function Home() {
       });
   }, []);
 
+  const filteredCharacters = (data?.characters || []).filter((character: any) => {
+    const matchesMotif = !selectedMotifId || character.motifId === selectedMotifId;
+    const matchesFranchise = selectedFranchises.length === 0 || 
+      selectedFranchises.includes(character.franchise);
+    return matchesMotif && matchesFranchise;
+  });
+
+  const handleMotifSelect = (motifId: number | null) => {
+    setSelectedMotifId(motifId);
+  };
+
+  const handleFranchiseChange = (franchises: string[]) => {
+    setSelectedFranchises(franchises);
+  };
+
+  const handleCharacterClick = (motifId: number) => {
+    setMotifToOpen(motifId);
+    setSelectedMotifId(motifId);
+  };
+
   return (
-    <AppLayout sidebar={<Selector motifs={data?.motifs || []} />}>
-      <Dashboard characters={data?.characters || []} />
+    <AppLayout 
+      sidebar={
+        <Selector 
+          motifs={data?.motifs || []} 
+          onMotifSelect={handleMotifSelect}
+          selectedMotifId={selectedMotifId}
+          motifToOpen={motifToOpen}
+          onMotifToOpenHandled={() => setMotifToOpen(null)}
+        />
+      }
+    >
+      <Dashboard 
+        characters={filteredCharacters}
+        selectedFranchises={selectedFranchises}
+        onFranchiseChange={handleFranchiseChange}
+        onCharacterDetailOpen={handleCharacterClick}
+      />
     </AppLayout>
   );
 }

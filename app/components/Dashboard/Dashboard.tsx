@@ -5,6 +5,7 @@ import { Stack, Typography, Grid } from "@mui/material";
 import DashboardCard from "./DashboardCard";
 import DashboardFilter from "./DashboardFilter";
 import CharacterDetail from "./CharacterDetail";
+import { Motif } from '@prisma/client';
 
 interface Character {
   id: number;
@@ -14,17 +15,21 @@ interface Character {
   description: string | null;
   imagePath: string;
   motifId: number;
+  motif: Motif;
 }
 
 interface DashboardProps {
   characters: Character[];
+  selectedFranchises: string[];
+  onFranchiseChange: (franchises: string[]) => void;
+  onCharacterDetailOpen: (motifId: number) => void;
 }
 
-function DashboardHeader() {
+function DashboardHeader({ selectedFranchises, onFranchiseChange }: { selectedFranchises: string[], onFranchiseChange: (franchises: string[]) => void }) {
   return (
     <Stack direction="row" justifyContent="space-between" alignItems="center" padding="40px" height="142px">
       <Typography variant="h1">Modern Portrayals</Typography>
-      <DashboardFilter />
+      <DashboardFilter selectedFranchises={selectedFranchises} onSelectedFranchisesChange={onFranchiseChange} />
     </Stack>
   );
 }
@@ -41,13 +46,14 @@ function DashboardContent({ characters, onCharacterClick }: { characters: Charac
   );
 }
 
-export default function Dashboard({ characters }: DashboardProps) {
+export default function Dashboard({ characters, selectedFranchises, onFranchiseChange, onCharacterDetailOpen }: DashboardProps) {
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleCharacterClick = (character: Character) => {
     setSelectedCharacter(character);
     setModalOpen(true);
+    onCharacterDetailOpen(character.motifId);
   };
 
   const handleModalClose = () => {
@@ -70,7 +76,7 @@ export default function Dashboard({ characters }: DashboardProps) {
 
   return (
     <Stack direction="column">
-      <DashboardHeader />
+      <DashboardHeader selectedFranchises={selectedFranchises} onFranchiseChange={onFranchiseChange} />
       <DashboardContent characters={characters} onCharacterClick={handleCharacterClick} />
       <CharacterDetail 
         character={selectedCharacter} 

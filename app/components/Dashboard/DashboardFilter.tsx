@@ -1,25 +1,28 @@
 "use client";
 
-import { useState } from "react";
 import { MenuItem, Select, Checkbox, ListItemText, SelectChangeEvent } from "@mui/material";
 
 const franchises = [
   "Genshin Impact",
-  "Grandmaster of Demonic Cul...",
-  "Heaven Official's Blessing",
+  "Grandmaster of Demonic Cultivation",
+  "Heaven's Official Blessing",
   "Kamisama Kiss",
   "League of Legends",
   "Naruto",
   "Pokémon",
+  "The Scum Villain's Self-Saving System",
 ];
 
-export default function DashboardFilter() {
-  const [selectedFranchises, setSelectedFranchises] = useState<string[]>([]);
+interface DashboardFilterProps {
+  selectedFranchises: string[];
+  onSelectedFranchisesChange: (franchises: string[]) => void;
+}
 
+export default function DashboardFilter({ selectedFranchises, onSelectedFranchisesChange }: DashboardFilterProps) {
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     const value = event.target.value;
-    setSelectedFranchises(typeof value === "string" ? value.split(",") : value);
-    console.log("Selected:", typeof value === "string" ? value.split(",") : value);
+    const franchises = typeof value === "string" ? value.split(",") : value;
+    onSelectedFranchisesChange(franchises);
   };
 
   return (

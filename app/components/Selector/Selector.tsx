@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Typography, Stack, Slide } from '@mui/material';
 import SelectorCard from './SelectorCard';
 import MotifDetail from './MotifDetail';
@@ -16,6 +16,10 @@ interface Motif {
 
 interface SelectorProps {
   motifs: Motif[];
+  onMotifSelect: (motifId: number | null) => void;
+  selectedMotifId: number | null;
+  motifToOpen: number | null;
+  onMotifToOpenHandled: () => void;
 }
 
 function SelectorHeader() {
@@ -36,7 +40,7 @@ function SelectorHeader() {
   );
 }
 
-function SelectorContent({ motifs, onMotifClick }: { motifs: Motif[]; onMotifClick: (motif: Motif) => void }) {
+function SelectorContent({ motifs, onMotifClick, selectedMotifId }: { motifs: Motif[]; onMotifClick: (motif: Motif) => void; selectedMotifId: number | null }) {
   return (
     <Stack
       direction="column"
@@ -48,21 +52,34 @@ function SelectorContent({ motifs, onMotifClick }: { motifs: Motif[]; onMotifCli
           key={motif.id}
           image={motif.imagePath}
           onClick={() => onMotifClick(motif)}
+          isSelected={selectedMotifId === motif.id}
         />
       ))}
     </Stack>
   )
 }
 
-export default function Selector({ motifs }: SelectorProps) {
+export default function Selector({ motifs, onMotifSelect, selectedMotifId, motifToOpen, onMotifToOpenHandled }: SelectorProps) {
   const [selectedMotif, setSelectedMotif] = useState<Motif | null>(null);
+
+  useEffect(() => {
+    if (motifToOpen !== null) {
+      const motif = motifs.find(m => m.id === motifToOpen);
+      if (motif) {
+        setSelectedMotif(motif);
+      }
+      onMotifToOpenHandled();
+    }
+  }, [motifToOpen, motifs, onMotifToOpenHandled]);
 
   const handleMotifClick = (motif: Motif) => {
     setSelectedMotif(motif);
+    onMotifSelect(motif.id);
   };
 
   const handleBack = () => {
     setSelectedMotif(null);
+    onMotifSelect(null);
   };
 
   return (
@@ -81,7 +98,7 @@ export default function Selector({ motifs }: SelectorProps) {
         }}>
           <Stack direction="column">
             <SelectorHeader />
-            <SelectorContent motifs={motifs} onMotifClick={handleMotifClick} />
+            <SelectorContent motifs={motifs} onMotifClick={handleMotifClick} selectedMotifId={selectedMotifId} />
           </Stack>
         </Box>
       </Slide>
