@@ -6,6 +6,7 @@ const franchises = [
   "Genshin Impact",
   "Grandmaster of Demonic Cultivation",
   "Heaven's Official Blessing",
+  "Inuyasha",
   "Kamisama Kiss",
   "League of Legends",
   "Naruto",

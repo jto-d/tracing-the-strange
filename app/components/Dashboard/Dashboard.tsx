@@ -36,7 +36,7 @@ function DashboardHeader({ selectedFranchises, onFranchiseChange }: { selectedFr
 
 function DashboardContent({ characters, onCharacterClick }: { characters: Character[], onCharacterClick: (character: Character) => void }) {
   return (
-    <Grid container spacing={4} px="40px">
+    <Grid container spacing={4} px="40px" pb="40px">
       {characters.map((character) => (
         <Grid key={character.id} size={{ xs: 12, md: 3 }}>
           <DashboardCard character={character} onClick={() => onCharacterClick(character)} />

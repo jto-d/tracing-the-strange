@@ -12,6 +12,8 @@ interface Motif {
   imagePath: string;
   backgroundImagePath: string;
   color: string;
+  analysis: string | null;
+  appearances: string | null;
 }
 
 interface SelectorProps {
