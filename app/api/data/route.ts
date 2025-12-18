@@ -5,11 +5,15 @@ export async function GET() {
   try {
     const [motifs, characters] = await Promise.all([
       prisma.motif.findMany({
+        orderBy: { id: 'asc' },
         include: {
-          characters: true,
+          characters: {
+            orderBy: { id: 'asc' },
+          },
         },
       }),
       prisma.character.findMany({
+        orderBy: { id: 'asc' },
         include: {
           motif: true,
         },
