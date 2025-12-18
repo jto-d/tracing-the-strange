@@ -72,15 +72,15 @@ export default function MotifDetail({ motif, onBack }: MotifDetailProps) {
           <Typography variant="h4">
             Description
           </Typography>
-          <Typography variant="body1" color="text.secondary">
-            {motif.analysis || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'}
+          <Typography variant="body1" color="text.secondary" style={{ whiteSpace: 'pre-wrap' }}>
+            {motif.analysis?.replace(/\\n/g, '\n') || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'}
           </Typography>
 
           <Typography variant="h4">
             Story Appearances
           </Typography>
-          <Typography variant="body1" color="text.secondary">
-            {motif.appearances || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'}
+          <Typography variant="body1" color="text.secondary" style={{ whiteSpace: 'pre-wrap' }}>
+            {motif.appearances?.replace(/\\n/g, '\n') || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'}
           </Typography>
         </Stack>
       </Stack>
